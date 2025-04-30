@@ -5,9 +5,9 @@ machineSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true,
     },
-    idDeliver:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
+    idDeliver: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: "Deliver"
     },
     area: {
@@ -32,7 +32,9 @@ machineSchema = new mongoose.Schema({
     },
     require_Hour_Active: {
         type: Number,
-         required: true,
+        min: 0,
+        max: 24,
+        required: true,
     }
 }, {
     timestamps: true

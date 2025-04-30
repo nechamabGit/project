@@ -20,13 +20,9 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useDispatch, useSelector } from 'react-redux';
-
-
+import { Dropdown } from 'primereact/dropdown';
+import{ViewDeliver} from '../delivers/ViewDelivers'
 const Machine = (props) => {
-
-   
-
-
     let emptyProduct = {
         id: null,
         machinName: '',
@@ -52,25 +48,35 @@ const Machine = (props) => {
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [fillReport, setFillReport] = useState(false);
-
+    const [value1, setValue1] = useState(22);
+    const [value2, setValue2] = useState(50);
+    const [value3, setValue3] = useState(20);
+    const [data, setData] = useState("");
     const toast = useRef(null);
     const dt = useRef(null);
     const { token } = useSelector((state) => state.token);
+    const [selectedCity, setSelectedCity] = useState(null);
+    const DeliversName = [
+        { name: 'New York', code: 'NY' },
+        { name: 'Rome', code: 'RM' },
+        { name: 'London', code: 'LDN' },
+        { name: 'Istanbul', code: 'IST' },
+        { name: 'Paris', code: 'PRS' }
+    ];
 
-   
-const getMachines=async ()=>{
-    try {
-        console.log(token);
-        const res = await axios.get('http://localhost:7002/api/machines', {
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.status === 200) {
-            setMachines(res.data);
+    const getMachines = async () => {
+        try {
+            console.log(token);
+            const res = await axios.get('http://localhost:7002/api/machines', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (res.status === 200) {
+                setMachines(res.data);
+            }
+        } catch (e) {
+            console.error(e);
         }
-    } catch (e) {
-        console.error(e);
-    }
-};
+    };
     const formatCurrency = (value) => {
         console.log(value);
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -173,14 +179,14 @@ const getMachines=async ()=>{
         setDeleteProductsDialog(true);
     };
 
-    const deleteSelectedProducts = async() => {
+    const deleteSelectedProducts = async () => {
         let _machines = machines.filter((val) => !selectedProducts.includes(val));
         let selectMachine = machines.filter((val) => selectedProducts.includes(val));
-        setMachines(_machines);   
+        setMachines(_machines);
 
         setDeleteProductsDialog(false);
         setSelectedProducts(null);
-        const res = await axios.delete(`http://localhost:7002/api/machines/${selectMachine[0]._id}`);     
+        const res = await axios.delete(`http://localhost:7002/api/machines/${selectMachine[0]._id}`);
 
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     }
@@ -237,7 +243,7 @@ const getMachines=async ()=>{
     // };
 
     const statusBodyTemplate = (rowData) => {
-        
+
         return <Tag value={rowData.inventoryStatus} severity={getSeverity(rowData)}></Tag>;
     };
 
@@ -252,12 +258,12 @@ const getMachines=async ()=>{
     const sendReport = (rowData) => {
         return (
             <>
-            <Button  onClick={()=>{setFillReport(true)}}>שלח דוח</Button>
-            <Dialog visible={fillReport} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideFillReport}>
-                <div className="confirmation-content">
-                    
-                </div>
-            </Dialog></>
+                <Button onClick={() => { setFillReport(true) }}>שלח דוח</Button>
+                <Dialog visible={fillReport} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideFillReport}>
+                    <div className="confirmation-content">
+
+                    </div>
+                </Dialog></>
         );
     };
     const getSeverity = (machine) => {
@@ -313,9 +319,9 @@ const getMachines=async ()=>{
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
                 <DataTable ref={dt} value={machines} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
-                        dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} machines" globalFilter={globalFilter} header={header}>
+                    dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} machines" globalFilter={globalFilter} header={header}>
                     <Column selectionMode="multiple" exportable={false}></Column>
                     <Column field="machinName" header="machinName" sortable style={{ minWidth: '12rem' }}></Column>
                     {/* <Column field="idDeliver" header="idDeliver" sortable style={{ minWidth: '16rem' }} body={(rowData) => rowData.idDeliver} /> */}
@@ -323,7 +329,7 @@ const getMachines=async ()=>{
                     <Column field="neightborhood" heade="neightborhood" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="address" header="address" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="minItems" header="minItems" sortable style={{ minWidth: '16rem' }}></Column>
-                    <Column field="maxItems" header="maxItems" sortable style={{ minWidth: '16rem' }}></Column>                
+                    <Column field="maxItems" header="maxItems" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="require_Hour_Active" header="require_Hour_Active" sortable style={{ minWidth: '16rem' }}></Column>
 
                     {/* <Column field="require_Hour_Active" header="require_Hour_Active" sortable style={{ minWidth: '16rem' }}></Column> */}
@@ -340,65 +346,60 @@ const getMachines=async ()=>{
             </div>
 
             <Dialog visible={machineDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Add Machine" modal className="p-fluid" footer={machineDialogFooter} onHide={hideDialog}>
-                {machine.image && <img src={`https://primefaces.org/cdn/primereact/images/machine/${machine.image}`} alt={machine.image} className="machine-image block m-auto pb-3" />}
                 <div className="field">
-                    <label htmlFor="name" className="font-bold">
-                        Name
-                    </label>
-                    <InputText id="name" value={machine.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !machine.name })} />
-                    {submitted && !machine.name && <small className="p-error">Name is required.</small>}
+                    <label htmlFor="machineName" className="font-bold">Machine Name</label>
+                    <InputText id="machineName" value={machine.machineName} onChange={(e) => onInputChange(e, 'machineName')} required autoFocus className={classNames({ 'p-invalid': submitted && !machine.machineName })} />
+                    {submitted && !machine.machineName && <small className="p-error">Machine name is required.</small>}
                 </div>
                 <div className="field">
-                    <label htmlFor="description" className="font-bold">    Description </label>
-                    <InputTextarea id="description" value={machine.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
+                    <label htmlFor="address" className="font-bold">Address</label>
+                    <InputText id="address" value={machine.address} onChange={(e) => onInputChange(e, 'address')} required className={classNames({ 'p-invalid': submitted && !machine.address })} />
+                    {submitted && !machine.address && <small className="p-error">Address is required.</small>}
                 </div>
-
-
+                <div className="field">
+                    <label htmlFor="area" className="font-bold">Area</label>
+                    <InputText id="area" value={machine.area} onChange={(e) => onInputChange(e, 'area')} required className={classNames({ 'p-invalid': submitted && !machine.area })} />
+                    {submitted && !machine.area && <small className="p-error">Area is required.</small>}
+                </div>
+                <div className="field">
+                    <label htmlFor="idDeliver" className="font-bold">Delivery ID</label>
+                    <InputText id="idDeliver" value={machine.idDeliver} onChange={(e) => onInputChange(e, 'idDeliver')} required className={classNames({ 'p-invalid': submitted && !machine.idDeliver })} />
+                    {submitted && !machine.idDeliver && <small className="p-error">Delivery ID is required.</small>}
+                </div>
+                
+                <div className="field">
+                    <label htmlFor="neighborhood" className="font-bold">Neighborhood</label>
+                    <InputText id="neighborhood" value={machine.neighborhood} onChange={(e) => onInputChange(e, 'neighborhood')} required className={classNames({ 'p-invalid': submitted && !machine.neighborhood })} />
+                    {submitted && !machine.neighborhood && <small className="p-error">Neighborhood is required.</small>}
+                </div>
+             
                 <div className="formgrid grid">
-                    <div className="field col">
-                        <label htmlFor="maxItems" className="font-bold">
-                            Price
-                        </label>
-                        <InputNumber id="maxItems" value={machine.maxItems} onValueChange={(e) => onInputNumberChange(e, 'maxItems')} mode="currency" currency="USD" locale="en-US" />
+                <div className="flex-auto">
+                        <label htmlFor="minmax-buttons" className="font-bold block mb-2">Minimum itens</label>
+                        <InputNumber inputId="minmax-buttons" value={value3} onValueChange={(e) => setValue3(e.value)} mode="decimal" showButtons min={20} max={49} />
                     </div>
-
-                    <div className="field col">
-                   
-                        <label htmlFor="maxItems" className="font-bold">
-                            Quantity
-                        </label>
-                        <InputNumber id="maxItems" value={machine.maxItems} onValueChange={(e) => onInputNumberChange(e, 'quantity')} />
+                    <div className="flex-auto">
+                        <label htmlFor="minmax-buttons" className="font-bold block mb-2">Maximum itens</label>
+                        <InputNumber inputId="minmax-buttons" value={value2} onValueChange={(e) => setValue2(e.value)} mode="decimal" showButtons min={21} max={50} />
                     </div>
                 </div>
-            </Dialog>
+                <div className="flex-auto">
+                        <label htmlFor="minmax-buttons" className="font-bold block mb-2">Require Hour Active</label>
+                        <InputNumber inputId="minmax-buttons" value={value1} onValueChange={(e) => setValue1(e.value)} mode="decimal" showButtons min={0} max={24} />
+                    </div>
+                <div className="card flex flex-wrap gap-3 p-fluid">
 
-            <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {machine && (
-                        <span>
-                            Are you sure you want to delete <b>{machine.name}</b>?
-                        </span>
-                    )}
-                </div>
-            </Dialog>
 
-            <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {machine && <span>Are you sure you want to delete the selected machines?</span>}
-
-                </div>
-            </Dialog>
+                <div className="card flex justify-content-center">
+            <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={DeliversName} optionLabel="name" 
+                placeholder="Select a City" className="w-full md:w-14rem" />
         </div>
-        
+                </div>
+            </Dialog>
+
+        </div>
+
     );
 }
-        
-
-
-
-
-
 
 export default Machine;
