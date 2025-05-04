@@ -2,13 +2,13 @@ const ReportToDeliver = require("../models/ReportToDeliver");
 
 const createNewReportToDeliver = async (req, res) => {
     const {idMachine,countFilling,complete,message} = req.body
-    if (!idMachine || !countFilling || !complete) { // Confirm data
+    if (!idMachine || !countFilling ) { // Confirm data
     return res.status(400).json({ message: 'all is required' })}
-    // Create and store the new ReportToDeliver
-    const ReportToDeliver = await ReportToDeliver.create({idMachine,countFilling,complete,message
+    // Create and store the new ReportToDeliver  = await ReportToDeliver.create({idMachine,countFilling,complete,message
+    const ReportToDeliverRes = await ReportToDeliver.create({idMachine,countFilling,complete,message
     })
     
-    if (ReportToDeliver) { // Created
+    if (ReportToDeliverRes){
     return res.status(201).json({ message: 'New ReportToDeliver created' })
     } else {
     return res.status(400).json({ message: 'Invalid ReportToDeliver ' })}}
@@ -28,7 +28,7 @@ const createNewReportToDeliver = async (req, res) => {
         const updateReportToDeliver = async (req, res) => {
             const {_id,idMachine,countFilling,complete,message}= req.body
             // Confirm data
-            if (!_id || !idMachine || !countFilling || !complete || !message) {
+            if (!_id || !idMachine || !countFilling  ) {
             return res.status(400).json({ message: 'fields are required' })
             }
             // Confirm ReportToDeliver exists to update

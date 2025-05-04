@@ -7,18 +7,13 @@ reportToDeliverSchema = new mongoose.Schema({
         required:true,
         ref: "Machine"
     },
-    // idDeliver:{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     required:true,
-    //     ref: "Deliver"
-    // },
     countFilling: {
         type: Number,
         required: true,
     },
     complete:{
         type:Boolean,
-        required: true,
+        required: false,
     },
     message:{
         type: mongoose.Schema.Types.String,

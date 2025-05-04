@@ -20,12 +20,9 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useDispatch, useSelector } from 'react-redux';
-
+import CreatReportToDeliver from '../reportsToDelivers/CreateReportToDeliver';
 
 const MachineSending = (props) => {
-
-   
-
 
     let emptyProduct = {
         id: null,
@@ -48,6 +45,7 @@ const MachineSending = (props) => {
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [fillReport, setFillReport] = useState(false);
+    const [countFillingNum, setCountFillingNum] =useState(0);
 
     const toast = useRef(null);
     const dt = useRef(null);
@@ -241,22 +239,13 @@ const getMachineSendings=async ()=>{
                 <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
             </React.Fragment>
         );
-    };
+    }; 
     const sendReport = (rowData) => {
         return (
             <>
             <Button  onClick={()=>{setFillReport(true)}}>שלח דוח</Button>
-            <Dialog visible={fillReport} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Report"  modal footer={deleteProductsDialogFooter} onHide={hideFillReport}>
-                <div className="confirmation-content"> 
-                    {/* {                    
-                    console.log(rowData)
-                    }                     */}               
-                    <div>
-                        <p>Hello  {rowData.idMachine.idDeliver.name} </p>
-                        <input type="text" value=" countFilling"/>
-                    </div>
-                </div>
-            </Dialog>
+             <CreatReportToDeliver fillReport={fillReport} rowData={rowData}          ></CreatReportToDeliver>
+    
             </>
         );
     };
@@ -297,12 +286,7 @@ const getMachineSendings=async ()=>{
             <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteProduct} />
         </React.Fragment>
     );
-    const deleteProductsDialogFooter = (
-        <React.Fragment>
-            <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
-            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
-        </React.Fragment>
-    );
+    
     useEffect(() => {
         getMachineSendings();
     }, []);
@@ -393,12 +377,12 @@ const getMachineSendings=async ()=>{
                 </div>
             </Dialog>
 
-            <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
+            {/* <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {MachineSending && <span>Are you sure you want to delete the selected MachineSendings?</span>}
                 </div>
-            </Dialog>
+            </Dialog> */}
         </div>
     );
 }

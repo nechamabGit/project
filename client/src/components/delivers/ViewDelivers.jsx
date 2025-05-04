@@ -37,7 +37,7 @@ const ViewDelivers = () => {
     return ( <>  
         <div>
             <Button label="create" icon="pi pi-user" onClick={() => { setVisible(true)} }/>
-            <CreatDeliver areaDeliver={null}  visible={visible} setVisible={setVisible}></CreatDeliver>
+            <CreatDeliver areaDeliver={null}  visible={visible} setVisible={setVisible} getDelivers={getDelivers}></CreatDeliver>
             
         </div>
         

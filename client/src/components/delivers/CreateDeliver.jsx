@@ -27,6 +27,7 @@ const CreatDeliver = (props) => {
             email: email,
             area: area
         }
+        
         const res = await axios.post('http://localhost:7002/api/auth/registerDeliver', newDeliver)
         if (res.status == "201") {
             console.log("uuuuuuuuuuuu");
