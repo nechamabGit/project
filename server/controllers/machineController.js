@@ -3,7 +3,7 @@ const Machine = require("../models/Machine");
 const createNewMachine = async (req, res) => {
     console.log("llllll");
     const { machinName, idDeliver, area, neightborhood, address, maxItems, minItems, require_Hour_Active } = req.body
-    if (!machinName || !area || !neightborhood || !address || !maxItems || !minItems || !require_Hour_Active || !idDeliver) { // Confirm data
+    if (!machinName || !area || !neightborhood || !address || !maxItems || !minItems || !require_Hour_Active) { // Confirm data
         return res.status(400).json({ message: 'all is required' })
     }
     // Create and store the new machine
@@ -51,7 +51,7 @@ const updateMachineDeliver = async (req, res) => {
 const updateMachine = async (req, res) => {
     const { _id, machinName, idDeliver, area, neightborhood, address, maxItems, minItems, require_Hour_Active } = req.body
     // Confirm data
-    if (!_id || !idDeliver || machinName || !area || !neightborhood || !address || !maxItems || !minItems || !require_Hour_Active) {
+    if (!_id || machinName || !area || !neightborhood || !address || !maxItems || !minItems || !require_Hour_Active) {
         return res.status(400).json({ message: 'fields are required' })
     }
     // Confirm machine exists to update

@@ -7,7 +7,7 @@ machineSchema = new mongoose.Schema({
     },
     idDeliver: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: "Deliver"
     },
     area: {

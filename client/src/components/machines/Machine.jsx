@@ -21,7 +21,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown } from 'primereact/dropdown';
-import{ViewDeliver} from '../delivers/ViewDelivers'
+import { ViewDeliver } from '../delivers/ViewDelivers'
 const Machine = (props) => {
     let emptyProduct = {
         id: null,
@@ -55,14 +55,39 @@ const Machine = (props) => {
     const toast = useRef(null);
     const dt = useRef(null);
     const { token } = useSelector((state) => state.token);
-    const [selectedCity, setSelectedCity] = useState(null);
-    const DeliversName = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
+    const [selectedArea, setselectedArea] = useState();
+    const [DeliversDataToArea, setDeliversDataToArea] = useState([]);
+    const [findDeliverByArea, setFindDeliverByArea] = useState([]);
+
+
+    const getDeliversToArea = async () => {
+        try {
+            console.log(token);
+            const delivers = await axios.get('http://localhost:7002/api/delivers', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (delivers.status === 200) {
+                setDeliversDataToArea(delivers.data);
+
+            }
+        } catch (e) {
+            console.error(e);
+        }
+
+    };
+
+    useEffect(() => {
+        getDeliversToArea();
+    }, []);
+
+
+    const DeliverByArea = () => {
+        const DeliverByArea = DeliversDataToArea.filter(element => element.area === selectedArea);
+        setFindDeliverByArea(DeliverByArea);
+        console.log(findDeliverByArea);
+        //return findDeliverByArea
+    }
+    const DeliversName = DeliversDataToArea.map(element => (element.area));
 
     const getMachines = async () => {
         try {
@@ -309,6 +334,7 @@ const Machine = (props) => {
             <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
         </React.Fragment>
     );
+
     useEffect(() => {
         getMachines();
     }, []);
@@ -331,15 +357,6 @@ const Machine = (props) => {
                     <Column field="minItems" header="minItems" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="maxItems" header="maxItems" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="require_Hour_Active" header="require_Hour_Active" sortable style={{ minWidth: '16rem' }}></Column>
-
-                    {/* <Column field="require_Hour_Active" header="require_Hour_Active" sortable style={{ minWidth: '16rem' }}></Column> */}
-                    {/* <Column field="require_Hour_Active" header="require_Hour_Active" body={imageBodyTemplate}></Column> */}
-                    {/* <Column field="price" header="Price" body={priceBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column> */}
-                    {/* <Column field="category" header="Category" sortable style={{ minWidth: '10rem' }}></Column> */}
-                    {/* <Column field="rating" header="Reviews" body={ratingBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column> */}
-                    {/* <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column>  */}
-                    {/* <Column    header="aaa" body={sendReport} exportable={false} style={{ minWidth: '12rem' }}></Column> */}
-
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
 
                 </DataTable>
@@ -355,26 +372,38 @@ const Machine = (props) => {
                     <label htmlFor="address" className="font-bold">Address</label>
                     <InputText id="address" value={machine.address} onChange={(e) => onInputChange(e, 'address')} required className={classNames({ 'p-invalid': submitted && !machine.address })} />
                     {submitted && !machine.address && <small className="p-error">Address is required.</small>}
-                </div>
-                <div className="field">
-                    <label htmlFor="area" className="font-bold">Area</label>
-                    <InputText id="area" value={machine.area} onChange={(e) => onInputChange(e, 'area')} required className={classNames({ 'p-invalid': submitted && !machine.area })} />
-                    {submitted && !machine.area && <small className="p-error">Area is required.</small>}
-                </div>
-                <div className="field">
-                    <label htmlFor="idDeliver" className="font-bold">Delivery ID</label>
-                    <InputText id="idDeliver" value={machine.idDeliver} onChange={(e) => onInputChange(e, 'idDeliver')} required className={classNames({ 'p-invalid': submitted && !machine.idDeliver })} />
-                    {submitted && !machine.idDeliver && <small className="p-error">Delivery ID is required.</small>}
-                </div>
-                
+                </div>                    <label htmlFor="address" className="font-bold">area</label>
+
+                <div className="card flex justify-content-left">
+    <Dropdown 
+        value={selectedArea} 
+        onChange={(e) => {
+            setselectedArea(e.value);
+            const filteredDeliveries = DeliversDataToArea.filter(element => element.area === e.value);
+            setFindDeliverByArea(filteredDeliveries); // Set the filtered deliveries
+        }} 
+        options={DeliversName} 
+        placeholder="Select an area" 
+        className="w-full md:w-14rem" 
+    />
+</div>
+<div className="field">
+    <label htmlFor="idDeliver" className="font-bold">Delivery name:</label>
+    <InputText 
+        id="deliver" 
+        value={findDeliverByArea.length > 0 ? findDeliverByArea[0].name : ''} // Safe access
+        readOnly 
+    />
+</div>
+
                 <div className="field">
                     <label htmlFor="neighborhood" className="font-bold">Neighborhood</label>
                     <InputText id="neighborhood" value={machine.neighborhood} onChange={(e) => onInputChange(e, 'neighborhood')} required className={classNames({ 'p-invalid': submitted && !machine.neighborhood })} />
                     {submitted && !machine.neighborhood && <small className="p-error">Neighborhood is required.</small>}
                 </div>
-             
+
                 <div className="formgrid grid">
-                <div className="flex-auto">
+                    <div className="flex-auto">
                         <label htmlFor="minmax-buttons" className="font-bold block mb-2">Minimum itens</label>
                         <InputNumber inputId="minmax-buttons" value={value3} onValueChange={(e) => setValue3(e.value)} mode="decimal" showButtons min={20} max={49} />
                     </div>
@@ -384,21 +413,13 @@ const Machine = (props) => {
                     </div>
                 </div>
                 <div className="flex-auto">
-                        <label htmlFor="minmax-buttons" className="font-bold block mb-2">Require Hour Active</label>
-                        <InputNumber inputId="minmax-buttons" value={value1} onValueChange={(e) => setValue1(e.value)} mode="decimal" showButtons min={0} max={24} />
-                    </div>
-                <div className="card flex flex-wrap gap-3 p-fluid">
-
-
-                <div className="card flex justify-content-center">
-            <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={DeliversName} optionLabel="name" 
-                placeholder="Select a City" className="w-full md:w-14rem" />
-        </div>
+                    <label htmlFor="minmax-buttons" className="font-bold block mb-2">Require Hour Active</label>
+                    <InputNumber inputId="minmax-buttons" value={value1} onValueChange={(e) => setValue1(e.value)} mode="decimal" showButtons min={0} max={24} />
                 </div>
+
             </Dialog>
 
         </div>
-
     );
 }
 
