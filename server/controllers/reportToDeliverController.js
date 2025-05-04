@@ -58,23 +58,23 @@ const createNewReportToDeliver = async (req, res) => {
                 }
         
     
-    // //getbyid
-    //             const getReportToDeliverById = async (req, res) => {
-    //                 const {_id} = req.params
-    //                 // Get single ReportToDeliver from MongoDB
-    //                 const ReportToDeliver = await ReportToDeliver.findById(_id).lean()
-    //                 // If no ReportToDelivers
-    //                 if (!ReportToDeliver) {
-    //                 return res.status(400).json({ message: 'No ReportToDeliver found' })
-    //                 }
-    //                 res.json(ReportToDeliver)
-    //                 }
+    //getbyid
+                const getReportToDeliverById = async (req, res) => {
+                    const {_id} = req.params
+                    // Get single ReportToDeliver from MongoDB
+                    const ReportToDeliver = await ReportToDeliver.findById(_id).lean()
+                    // If no ReportToDelivers
+                    if (!ReportToDeliver) {
+                    return res.status(400).json({ message: 'No ReportToDeliver found' })
+                    }
+                    res.json(ReportToDeliver)
+                    }
                    
                      
                     module.exports = {
                         getAllReportToDeliver,
                         createNewReportToDeliver,
-                        //getReportToDeliverById,
+                        getReportToDeliverById,
                         updateReportToDeliver,   
                         deleteReportToDeliver
                         }

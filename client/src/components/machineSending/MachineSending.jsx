@@ -1,5 +1,5 @@
 // import { Avatar } from '@/components/lib/avatar/Avatar';
-// import { deleteMachineSending } from "../../../../server/controllers/MachineSendingControllers";
+//  { deleteMimportachineSending } from '../../../../server/controllers/machineSendingController';
 import axios from 'axios';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -130,7 +130,7 @@ const getMachineSendings=async ()=>{
         let _MachineSendings = MachineSendings.filter((val) => val.id !== MachineSending.id);
 
         setMachineSendings(_MachineSendings);
-        setDeleteProductDialog(false);
+        setDeleteProductDialog(true);
         setProduct(emptyProduct);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
@@ -235,7 +235,7 @@ const getMachineSendings=async ()=>{
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editProduct(rowData)} />
+                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editProduct(rowData)} /> 
                 <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
             </React.Fragment>
         );
@@ -244,7 +244,7 @@ const getMachineSendings=async ()=>{
         return (
             <>
             <Button  onClick={()=>{setFillReport(true)}}>שלח דוח</Button>
-             <CreatReportToDeliver fillReport={fillReport} rowData={rowData}          ></CreatReportToDeliver>
+             <CreatReportToDeliver fillReport={fillReport} rowData={rowData}  hideDialog={hideDialog}  hideFillReport={hideFillReport} setFillReport={setFillReport}     ></CreatReportToDeliver>
     
             </>
         );
@@ -307,10 +307,11 @@ const getMachineSendings=async ()=>{
                     <Column field="last_Hour_Active" header="last_Hour_Active" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column> 
                     <Column    header="sending report" body={sendReport} exportable={false} style= {{ minWidth: '12rem' }}></Column>
-                    {/* <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column> */}
+                    <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
 
                 </DataTable>
             </div>
+            {/* //onHide={hideDialog} */}
 
             <Dialog visible={MachineSendingDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={MachineSendingDialogFooter} onHide={hideDialog}>
                 {MachineSending.image && <img src={`https://primefaces.org/cdn/primereact/images/MachineSending/${MachineSending.image}`} alt={MachineSending.image} className="MachineSending-image block m-auto pb-3" />}
@@ -377,12 +378,12 @@ const getMachineSendings=async ()=>{
                 </div>
             </Dialog>
 
-            {/* <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
+            <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductsDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {MachineSending && <span>Are you sure you want to delete the selected MachineSendings?</span>}
                 </div>
-            </Dialog> */}
+            </Dialog>
         </div>
     );
 }

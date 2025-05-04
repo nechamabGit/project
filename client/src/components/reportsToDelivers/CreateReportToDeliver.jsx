@@ -11,6 +11,9 @@ import React, { useState, useEffect, useRef } from 'react'
 const CreatReportToDeliver = (props) => {
     const { rowData} =props
     const { fillReport } =   props
+    const {  hideDialog} =   props
+    const {setFillReport}=props
+    const {hideFillReport}=props
     // const { areaReportToDeliver } = props
     
   
@@ -30,22 +33,7 @@ const CreatReportToDeliver = (props) => {
         if (res.status == "201") {
             console.log("uuuuuuuuuuuu");
         }
-        // if (areaReportToDeliver) {  
-        //     console.log(areaReportToDeliver);
-        //     const res1 = await axios.put(`http://localhost:7002/api/machines/updateMachineReportToDeliver/${areaReportToDeliver._id}`, { newId: res.data._id })
-        //     if (res.status == "200") {
-        //         const res1 = await axios.delete(`http://localhost:7002/api/ReportToDelivers/${areaReportToDeliver._id}`)
-        //         if(res1.status=="200"){
-        //             alert("deleted")
-        //         }
-        //     }
-        // }
-
-        // getReportToDelivers();
-
-
-        //setReportToDeliverData(res.data)
-
+        hideFillReport();
     }
     // createReportToDeliver(rowData.idMachine,50,false,message.current.value)}    />
     const sendToDeliver =(
@@ -56,7 +44,7 @@ const CreatReportToDeliver = (props) => {
     );
 
     return (<>
-            <Dialog visible={fillReport} style={{ width: '80em' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Report" modal footer={sendToDeliver}>
+            <Dialog visible={fillReport} style={{ width: '80em' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Report" modal footer={sendToDeliver} onHide={hideFillReport}>
                 <div className="confirmation-content"> 
                                 
                     <div>
