@@ -12,18 +12,25 @@ const HomeDeliver = () => {
     const navigate= useNavigate()
     
     const items = [
+        // {
+        //     label: 'Home',
+        //     icon: 'pi pi-home',
+        //     command: () => {
+        //         navigate('/')
+        //     }
+        // },
         {
-            label: 'Home',
-            icon: 'pi pi-home',
+            label: ' reports',
+            icon: 'pi pi-star',
             command: () => {
-                navigate('/')
+                navigate('./deliver/VeiwReportstOdeLIVERS')
             }
         },
         {
             label: ' machines',
             icon: 'pi pi-star',
             command: () => {
-                navigate('/machines/Mmachines')
+                navigate('./Machines/Machine')
             }
         },
         {

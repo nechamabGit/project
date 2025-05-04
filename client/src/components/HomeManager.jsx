@@ -35,6 +35,13 @@ const HomeManager = () => {
                 navigate('../logOut')
             }
         },
+        {
+            label: 'Machines',
+            icon: 'pi pi-envelope',
+            command :()=>{
+                navigate('./Machines/Machine')
+            }
+        }
         // {
         //     label: 'Projects',
         //     icon: 'pi pi-search',
@@ -67,13 +74,7 @@ const HomeManager = () => {
         //         }
         //     ]
         // },
-        {
-            label: 'Machines',
-            icon: 'pi pi-envelope',
-            command :()=>{
-                navigate('./Machines/Machine')
-            }
-        }
+        
     ];
 useEffect(()=>{
 console.log(accesstoken);
