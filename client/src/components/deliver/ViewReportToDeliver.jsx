@@ -1,22 +1,21 @@
-import Deliver from "./Deliver";
+
 import React from "react";
 import { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
-import CreatDeliver from "./CreateDeliver";
 import { Button } from 'primereact/button'
 //import { useNavigate } from "react-router";
+import ReportToDeliver from "./ReportToDeliver";
 
-//const navigate = useNavigate();
-
-const VeiwReportstOdeLIVERS = () => {
+const ViewReportToDelivedr = () => {
     const { token } = useSelector((state) => state.token);
     const [reportsTodeliversData, setreportsTodeliversData] = useState([]);
 
     const getReportsToDelivers = async () => {
+         //const username=token.user
         try {
             console.log(token);
-            const res = await axios.get(`http://localhost:7002/api/reportToDeliver/${ID}`, {
+            const res = await axios.get("http://localhost:7002/api/reportToDeliver/byid", {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.status === 200) {
@@ -57,7 +56,7 @@ const VeiwReportstOdeLIVERS = () => {
         </> );
 };
 
-export default VeiwReportstOdeLIVERS;
+export default ViewReportToDelivedr;
 
 
 

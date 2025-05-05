@@ -5,7 +5,7 @@ const verifyJWTManager = require("../middleware/verifyJWTManager")
 
 const reportToDeliverController = require("../controllers/reportToDeliverController")
 router.get("/",reportToDeliverController.getAllReportToDeliver)
-router.get("/:id", reportToDeliverController.getreportToDeliverById)
+router.get("/byid",verifyJWTDeliver, reportToDeliverController.getReportToDeliverById)
 router.post("/", reportToDeliverController.createNewReportToDeliver)
 router.delete("/:_id",reportToDeliverController.deleteReportToDeliver)
 router.put("/",reportToDeliverController.updateReportToDeliver)

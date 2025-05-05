@@ -6,8 +6,8 @@ import { Dialog } from 'primereact/dialog';
 import axios from 'axios';
 import { Card } from "primereact/card"
 import { useSelector } from "react-redux";
-import CreatDeliver from "./CreateDeliver";
-import {createDeliver} from "./ViewDelivers"
+//import CreatDeliver from "./CreateDeliver";
+//import {createDeliver} from "./ViewDelivers"
 import { Toast } from 'primereact/toast';
 
 const ReportToDeliver = (props) => {
@@ -101,8 +101,8 @@ const header = (
     <img src="https://primefaces.org/cdn/primereact/images/usercard.png" />
 );
 return (<>
-
-    {<Card style={{ width: "20%" }} title={report.idMachine} footer={footer} header={header} className="md:w-25rem">
+{/* footer={footer} */}
+    {<Card style={{ width: "20%" }} title={report.idMachine}  header={header} className="md:w-25rem">
         <p className="m-0">
             {report.massage}
             {/* {deliver.email}

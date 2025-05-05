@@ -63,10 +63,6 @@ const deletAndCreate= async ()=>{
     //         {/* createDeliver={createDeliver} visible={visible} */}
     //     </div>
     
-    
-    
-    
-    // </>
 }    
 
     

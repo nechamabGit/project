@@ -20,17 +20,20 @@ import Machine from './components/machines/Machine';
 import MachineSending from './components/machineSending/MachineSending';
 import { useDispatch, useSelector } from 'react-redux';
 import HomeDeliver from './components/HomeDeliver';
+import ViewReportToDeliver from './components/deliver/ViewReportToDeliver';
 
 function App() {
   const { token,role } = useSelector((state) => state.token);
 
   return (
     <div >         
-       <Routes>        
-          <Route path="/" element={<Login/>} /></Routes>
+       {/* <Routes>        
+          <Route path="/" element={<Login/>} />
+        </Routes> */}
 
      {role=="manager"? <HomeManager/>:role=="deliver"?<HomeDeliver/>:<></>} 
       <Routes>
+            <Route path="/" element={<Login/>} />
               <Route path="/components/HomeManager" element={<HomeManager />} />
               <Route path="/delivers/ViewDelivers" element={<ViewDelivers/>} />
               <Route path="/Machines/Machine" element={<Machine/>} />
@@ -38,6 +41,7 @@ function App() {
               <Route path="/logOut" element={<LogOut/>} />
               <Route path="/components/delivers/deliver" element={<deliver/>} />
               <Route path="/login" element={<Login/>} />
+              <Route path="/deliver/ViewReportToDeliver" element={<ViewReportToDeliver/>} />
 
               {/* <Route path="/components/Register" element={<Register />} /> */}
       </Routes>

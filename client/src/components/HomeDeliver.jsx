@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Register from './Register';
 // import '../App.css';
 import { useDispatch, useSelector } from 'react-redux';
-
+//import ViewReportToDeliver from './deliver/ViewReportToDeliver'
 
 
 const HomeDeliver = () => {
@@ -23,14 +23,14 @@ const HomeDeliver = () => {
             label: ' reports',
             icon: 'pi pi-star',
             command: () => {
-                navigate('./deliver/VeiwReportstOdeLIVERS')
+                navigate('/deliver/ViewReportToDeliver')
             }
         },
         {
             label: ' machines',
             icon: 'pi pi-star',
             command: () => {
-                navigate('./Machines/Machine')
+                navigate('/Machines/Machine')
             }
         },
         {
@@ -77,9 +77,13 @@ const HomeDeliver = () => {
         //     icon: 'pi pi-envelope'
         // }/
     ];
-useEffect(()=>{
-console.log(accesstoken);
-},[])
+// useEffect(()=>{
+// console.log(accesstoken);
+// },[])
+useEffect(() => {
+    console.log("User data:", accesstoken);  // הצגת הטוקן
+}, [accesstoken])
+
     return (
         <div >
             <Menubar model={items} />
