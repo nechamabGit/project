@@ -2,13 +2,13 @@ const Machine = require("../models/Machine");
 
 const createNewMachine = async (req, res) => {
     console.log("llllll");
-    const { machinName, idDeliver, area, neightborhood, address, maxItems, minItems, require_Hour_Active } = req.body
-    if (!machinName || !area || !neightborhood || !address || !maxItems || !minItems || !require_Hour_Active) { // Confirm data
+    const { machineName, idDeliver, area, neighborhood, address, minItems,maxItems , require_Hour_Active } = req.body
+    if (!machineName ||!idDeliver||!area || !neighborhood || !address || !maxItems || !minItems || !require_Hour_Active) { // Confirm data
         return res.status(400).json({ message: 'all is required' })
     }
     // Create and store the new machine
     const machine = await Machine.create({
-        machinName, idDeliver, area, neightborhood, address, maxItems,
+        machineName, idDeliver, area, neighborhood, address, maxItems,
         minItems, require_Hour_Active
     })
 
@@ -49,9 +49,10 @@ const updateMachineDeliver = async (req, res) => {
 
 //update
 const updateMachine = async (req, res) => {
-    const { _id, machinName, idDeliver, area, neightborhood, address, maxItems, minItems, require_Hour_Active } = req.body
+    const {machineName, idDeliver, area, neighborhood, address, maxItems, minItems, require_Hour_Active } = req.body
     // Confirm data
-    if (!_id || machinName || !area || !neightborhood || !address || !maxItems || !minItems || !require_Hour_Active) {
+    console.log(kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk);
+    if (!idDeliver||!machineName || !area || !neighborhood || !address || !maxItems || !minItems || !require_Hour_Active) {
         return res.status(400).json({ message: 'fields are required' })
     }
     // Confirm machine exists to update
@@ -59,16 +60,16 @@ const updateMachine = async (req, res) => {
     if (!machine) {
         return res.status(400).json({ message: 'Machine not found' })
     }
-    machine.machinName = machinName
+    machine.machineName = machineName
     machine.idDeliver = idDeliver
     machine.area = area
-    machine.neightborhood = neightborhood
+    machine.neighborhood = neighborhood
     machine.address = address
     machine.maxItems = maxItems
     machine.minItems = minItems
     machine.require_Hour_Active = require_Hour_Active
     const updateMachine = await machine.save()
-    res.json(`'${updateMachine.area}' updated`)
+    res.json(`'${updateMachine.machineName}' updated`)
 }
 
 //delete
