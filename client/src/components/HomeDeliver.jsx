@@ -23,14 +23,14 @@ const HomeDeliver = () => {
             label: ' reports',
             icon: 'pi pi-star',
             command: () => {
-                navigate('/deliver/ViewReportToDeliver')
+                navigate('./deliver/ViewReportToDeliver')
             }
         },
         {
             label: ' machines',
             icon: 'pi pi-star',
             command: () => {
-                navigate('/Machines/Machine')
+                navigate('./Machines/Machine')
             }
         },
         {

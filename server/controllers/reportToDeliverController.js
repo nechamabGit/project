@@ -64,21 +64,21 @@ const createNewReportToDeliver = async (req, res) => {
         
         // החילוץ של ה-ID מתוך ה-USER
         const _id = req.user._id;  // ככה את שולפת את ה-ID מתוך ה-Payload
-      
+        console.log(_id);
         // אם את רוצה לוודא שה-USER קיים, את יכולה להוסיף בדיקה
         if (!req.user || !req.user._id) {
           return res.status(400).json({ message: 'User ID is missing' });
         }
       
         // קבלת הדו"ח על פי ה-ID
-        const ReportToDeliver = await ReportToDeliver.findById(_id).lean();
-      
+        // const ReportToDeliver2 = await ReportToDeliver.findById(_id).lean();
+        const ReportToDeliver2 = await ReportToDeliver.find({ user: _id }).lean();
         // אם לא נמצא דו"ח
-        if (!ReportToDeliver) {
+        if (!ReportToDeliver2) {
           return res.status(400).json({ message: 'No ReportToDeliver found' });
         }
       
-        res.json(ReportToDeliver);
+        res.json(ReportToDeliver2);
       }
                      
                     module.exports = {

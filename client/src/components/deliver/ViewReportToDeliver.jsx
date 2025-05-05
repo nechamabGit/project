@@ -8,14 +8,16 @@ import { Button } from 'primereact/button'
 import ReportToDeliver from "./ReportToDeliver";
 
 const ViewReportToDelivedr = () => {
-    const { token } = useSelector((state) => state.token);
+    const { token, user } = useSelector((state) => state.token);
+    
     const [reportsTodeliversData, setreportsTodeliversData] = useState([]);
 
     const getReportsToDelivers = async () => {
          //const username=token.user
         try {
             console.log(token);
-            const res = await axios.get("http://localhost:7002/api/reportToDeliver/byid", {
+            console.log("iiiiiiiiiiiiiiii");
+            const res = await axios.get("http://127.0.0.1:7002/api/reportToDeliver/byid", {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.status === 200) {
