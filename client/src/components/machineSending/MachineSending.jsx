@@ -51,7 +51,9 @@ const MachineSending = (props) => {
             </>
         );
     };
-
+   const makeMachineName = (rowData) => {
+        return <h4> {rowData.idMachine.machineName} </h4>;
+};
     const getSeverity = (MachineSending) => {
         if (MachineSending.last_Hour_Active < MachineSending.idMachine.require_Hour_Active) {
             return 'warning';
@@ -105,7 +107,7 @@ const MachineSending = (props) => {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="machinName" header="machinName" sortable style={{ minWidth: '12rem' }}></Column>
+                    <Column field="machinName" header="machinName" body={makeMachineName}sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="amountBuying" header="amountBuying" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="amountLeft" header="amountLeft" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="last_Hour_Active" header="last_Hour_Active" sortable style={{ minWidth: '16rem' }}></Column>
