@@ -15,7 +15,7 @@ const ViewReportToDelivedr = () => {
     const getReportsToDelivers = async () => {
          //const username=token.user
         try {
-            console.log(token);
+           // console.log(token);
             console.log("iiiiiiiiiiiiiiii");
             const res = await axios.get("http://127.0.0.1:7002/api/reportToDeliver/byid", {
                 headers: { Authorization: `Bearer ${token}` }
