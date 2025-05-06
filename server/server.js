@@ -19,7 +19,9 @@ app.use("/api/manager", require("./routes/managerRoutes"))
 app.use("/api/delivers", require("./routes/deliverRoutes"))
 app.use("/api/machineSending", require("./routes/machineSendingRoutes"))
 app.use("/api/auth", require("./routes/authRoutes"))
+console.log("server");
 app.use("/api/reportToDeliver", require("./routes/reportToDeliversRoutes"))
+
 //routes
 app.get("/", (req, res) => {
     res.send("this is the home page")

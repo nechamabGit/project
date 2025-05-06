@@ -14,6 +14,7 @@ const ReportToDeliver = (props) => {
     const { token } = useSelector((state) => state.token);
     const [visible, setVisible] = useState(false);
     const[areaDeliver, setAreaDeliver]= useState(null);
+    console.log("to view");
     
     const { getReportsToDelivers } = props
     const { report } = props
