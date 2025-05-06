@@ -39,7 +39,7 @@ const Machine = (props) => {
     };
     const [selectedCountry, setSelectedCountry] = useState(null);
 
-    const [machines, setMachines] = useState(null);
+    const [machines, setMachines] = useState([""]);
     const [machineDialog, setMachineDialog] = useState(false);
     const [updateDialog, setUpdateDialog] = useState(false);
 
@@ -83,15 +83,32 @@ const Machine = (props) => {
             minItems: minItems,
             maxItems: maxItems,
             require_Hour_Active: require_Hour_Active
-        }
+        };
+
         try {
+            // קריאה לשרת לעדכון המידע
             const res = await axios.put('http://localhost:7002/api/machines', updateDetailMachine);
-            console.log('Machine update successfully:', res.data);
+
+            if (res.status === 200) {
+                console.log('Machine updated successfully:', res.data);
+
+                // עדכון ה-state באופן מקומי
+                setMachines((prevMachines) =>
+                    prevMachines.map((m) =>
+                        m._id === updateDetailMachine._id ? { ...m, ...updateDetailMachine } : m
+                    )
+                );
+
+                // הודעת הצלחה
+                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Machine Updated', life: 3000 });
+            }
         } catch (error) {
+            console.error('Error updating machine:', error);
 
+            // הודעת כישלון
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Failed to update machine', life: 3000 });
         }
-    }
-
+    };
 
 
     const createDeliver = async (machineName, idDeliver, area, neighborhood, address, maxItems, minItems, require_Hour_Active) => {
@@ -141,28 +158,28 @@ const Machine = (props) => {
 
     const getMachines = async () => {
         try {
-            console.log(token);
-            const res=null;
-            if (role == "manager") {
-             res = await axios.get('http://localhost:7002/api/machines', {
-                headers: { Authorization: `Bearer ${token}` }
-            }); }
-            else{
-                console.log("jjjjjjjjjjjj",user);
-                const res = await axios.get(`http://localhost:7002/api/machines/${user._id}`, {
+            console.log('Token:', token);
+            let res = null; // הגדרת משתנה res עם let כדי לאפשר שינוי
+
+            if (role === "manager") {
+                res = await axios.get('http://localhost:7002/api/machines', {
                     headers: { Authorization: `Bearer ${token}` }
-                });  
+                });
+            } else {
+                console.log("User ID:", user._id);
+                res = await axios.get(`http://localhost:7002/api/machines/${user._id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
             }
-            if (res.status === 200) {
-                setMachines(res.data);
+
+            if (res && res.status === 200) { // בדיקה אם res אינו null ואם הקריאה הצליחה
+                setMachines(res.data); // עדכון ה-state עם הנתונים שהתקבלו
+            } else {
+                console.error("Failed to fetch machines: Invalid response status", res?.status);
             }
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error("Error fetching machines:", error);
         }
-    };
-    const formatCurrency = (value) => {
-        console.log(value);
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     };
 
     const openNew = () => {
@@ -338,10 +355,10 @@ const Machine = (props) => {
         return <img src={`https://primefaces.org/cdn/primereact/images/machine/${rowData.image}`} alt={rowData.image} className="shadow-2 border-round" style={{ width: '64px' }} />;
     };
 
-    const priceBodyTemplate = (rowData) => {
-        console.log(rowData);
-        return formatCurrency(rowData.price);
-    };
+    // const priceBodyTemplate = (rowData) => {
+    //     console.log(rowData);
+    //     return formatCurrency(rowData.price);
+    // };
 
     const statusBodyTemplate = (rowData) => {
 
@@ -416,19 +433,20 @@ const Machine = (props) => {
             <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteProduct} />
         </React.Fragment>
     );
-    // const deleteProductsDialogFooter = (
-    //     <React.Fragment>
-    //         <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
-    //         <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
-    //     </React.Fragment>
-    // );
+
     const editProduct = (machine) => {
         setProduct({ ...machine });
         setUpdateDialog(true);
     };
+
+
+
+
     useEffect(() => {
         getMachines();
     }, []);
+
+
     return (
         <div>
 

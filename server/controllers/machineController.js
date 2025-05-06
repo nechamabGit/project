@@ -8,7 +8,7 @@ const createNewMachine = async (req, res) => {
     }
     // Create and store the new machine
     const machine = await Machine.create({
-        _id,machineName, idDeliver, area, neighborhood, address, maxItems,
+       machineName, idDeliver, area, neighborhood, address, maxItems,
         minItems, require_Hour_Active
     })
 
