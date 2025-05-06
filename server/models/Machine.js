@@ -1,20 +1,20 @@
 const mongoose = require('mongoose')
 
 machineSchema = new mongoose.Schema({
-    machinName: {
+    machineName: {
         type: mongoose.Schema.Types.String,
         required: true,
     },
     idDeliver: {
         type: mongoose.Schema.Types.ObjectId,
-        required: false,
+        required: true,
         ref: "Deliver"
     },
     area: {
         type: mongoose.Schema.Types.String,
         required: true,
     },
-    neightborhood: {
+    neighborhood: {
         type: mongoose.Schema.Types.String,
         required: true,
     },
