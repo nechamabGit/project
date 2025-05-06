@@ -31,6 +31,7 @@ const Login = () => {
     }
     console.log(res.data);
     dispatch(setToken(res.data.accessToken))
+    console.log(res.data.user.role);
     dispatch(setRole(res.data.user.role))
     dispatch(setUser(res.data.user))
 

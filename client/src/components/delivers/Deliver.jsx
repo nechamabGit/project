@@ -1,8 +1,6 @@
 import React, { useState ,useRef} from "react";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-// import { Avatar } from '@/components/lib/avatar/Avatar';
-// import { deleteDeliver } from "../../../../server/controllers/deliverControllers";
 import axios from 'axios';
 import { Card } from "primereact/card"
 import { useSelector } from "react-redux";
@@ -41,7 +39,6 @@ const Deliver = (props) => {
                 content: (props) => (
                     <div   className="flex flex-column align-items-center"  style={{  backgroundColor:"whiteblue",flex: '1' }}>
                         <div className="flex align-items-center gap-2">
-                            {/* <span className="font-bold text-900">Amy Elsner</span> */}
                         </div>
                         <div className="font-medium text-lg my-3 text-900">{props.message.summary}</div>
                         <Button  className="p-button-sm flex align-items-center" label="OK" severity="success" onClick={clear}></Button>
@@ -55,41 +52,17 @@ const deletAndCreate= async ()=>{
     console.log(deliver);
     setVisible(true)
     setAreaDeliver(deliver);
-    
-    // return<>
-    //     <div>
-    //         <Button label="create" icon="pi pi-user" onClick={() => { setVisible(true)} }/>
-    //         <CreatDeliver  setVisible={setVisible} areaDeliver={areaDeliver}></CreatDeliver>
-    //         {/* createDeliver={createDeliver} visible={visible} */}
-    //     </div>
-    
 }    
 
     
-const deleteDeliver = async (props) => {
 
-    //<Button label="delete" severity="secondary" icon="pi pi-times" style={{ marginLeft: '0.5em' }} onClick={() => {return deleteDeliver()}} />
-    const id = deliver._id; // Ensure 'deliver' is defined
-    try {
-        const res = await axios.delete(`http://localhost:7002/api/delivers/${id}`);
-        if (res.status === 200) {
-            console.log("200 OK");
-            // Correctly call setDeliversData without assignment to res.data
-           getDelivers();
-        }
-    } catch (err) {
-        console.error("Failed to delete deliver:", err);
-    }
-};
 
 
 const footer = (
     <>
             <Toast   style={{  color:"blue",flex: '1' }} ref={toastBC} position="top-center" onRemove={clear} />
 
-        <Button label="delete" severity="secondary" icon="pi pi-times" style={{ marginLeft: '0.5em' }} onClick={confirm} 
-        //  onClick={() => { deletAndCreate()}}
-          />
+        <Button label="delete" severity="secondary" icon="pi pi-times" style={{ marginLeft: '0.5em' }} onClick={confirm}   />
     </>
 );
 

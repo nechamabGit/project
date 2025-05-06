@@ -9,7 +9,7 @@ router.get("/:id", machineController.getMachineById)
 router.post("/", machineController.createNewMachine)
 router.delete("/:_id",verifyJWTDeliver,machineController.deleteMachine)
 router.put("/",machineController.updateMachine)
-// router.put("/updateMachineDeliver/:id",machineController.updateMachineDeliver)
+router.put("/updateMachineDeliver/:id",machineController.updateMachineDeliver)
 
 
 module.exports = router

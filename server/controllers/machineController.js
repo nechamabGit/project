@@ -8,7 +8,7 @@ const createNewMachine = async (req, res) => {
     }
     // Create and store the new machine
     const machine = await Machine.create({
-        machineName, idDeliver, area, neighborhood, address, maxItems,
+        _id,machineName, idDeliver, area, neighborhood, address, maxItems,
         minItems, require_Hour_Active
     })
 
@@ -49,10 +49,10 @@ const updateMachineDeliver = async (req, res) => {
 
 //update
 const updateMachine = async (req, res) => {
-    const {machineName, idDeliver, area, neighborhood, address, maxItems, minItems, require_Hour_Active } = req.body
+    const {_id,machineName, idDeliver, area, neighborhood, address, minItems,maxItems , require_Hour_Active } = req.body
+    console.log(_id,machineName, idDeliver, area, neighborhood, address, minItems,maxItems , require_Hour_Active );
     // Confirm data
-    console.log(kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk);
-    if (!idDeliver||!machineName || !area || !neighborhood || !address || !maxItems || !minItems || !require_Hour_Active) {
+    if (!_id||!machineName ||!idDeliver||!area || !neighborhood || !address || !maxItems || !minItems || !require_Hour_Active) { // Confirm data
         return res.status(400).json({ message: 'fields are required' })
     }
     // Confirm machine exists to update
@@ -65,8 +65,8 @@ const updateMachine = async (req, res) => {
     machine.area = area
     machine.neighborhood = neighborhood
     machine.address = address
-    machine.maxItems = maxItems
-    machine.minItems = minItems
+    machine.minItems = minItems 
+   machine.maxItems = maxItems
     machine.require_Hour_Active = require_Hour_Active
     const updateMachine = await machine.save()
     res.json(`'${updateMachine.machineName}' updated`)
@@ -95,7 +95,7 @@ const getMachineById = async (req, res) => {
     console.log(id);
 
     // Get single machine from MongoDB
-    const machine = await Machine.findById(id).populate('idDeliver').lean()
+    const machine = await Machine.find({idDeliver:id}).populate('idDeliver').lean()
     console.log(machine);
     // If no machines
     if (!machine) {

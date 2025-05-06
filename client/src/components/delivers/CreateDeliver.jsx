@@ -34,11 +34,11 @@ const CreatDeliver = (props) => {
         }
         if (areaDeliver) {
             console.log(areaDeliver);
-            const res1 = await axios.put(`http://localhost:7002/api/machines/updateMachineDeliver/${areaDeliver._id}`, { newId: res.data._id })
-            if (res.status == "200") {
+            const res2 = await axios.put(`http://localhost:7002/api/machines/updateMachineDeliver/${areaDeliver._id}`, { newId: res.data._id })
+            if (res2.status == "200") {
                 const res1 = await axios.delete(`http://localhost:7002/api/delivers/${areaDeliver._id}`)
                 if(res1.status=="200"){
-                    alert("deleted")
+                    alert("succses")
                 }
             }
         }
