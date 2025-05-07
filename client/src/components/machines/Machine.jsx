@@ -31,8 +31,8 @@ const Machine = (props) => {
         area: '',
         neighborhood: '',
         address: '',
-        maxItems: '',
         minItems: '',
+        maxItems: '',
         require_Hour_Active: '',
 
         // inventoryStatus: 'INSTOCK'
@@ -58,7 +58,7 @@ const Machine = (props) => {
     const { token } = useSelector((state) => state.token);
     const { role } = useSelector((state) => state.token);
     const { user } = useSelector((state) => state.token);
-
+    let filteredDeliveries = null;
     const [selectedArea, setselectedArea] = useState();
     const [DeliversDataToArea, setDeliversDataToArea] = useState([]);
     const [findDeliverByArea, setFindDeliverByArea] = useState([]);
@@ -67,12 +67,12 @@ const Machine = (props) => {
     const area = useRef(" ")
     const neighborhood = useRef(" ")
     const address = useRef(" ")
-    const maxItems = useRef(" ")
     const minItems = useRef(" ")
+    const maxItems = useRef(" ")
     const require_Hour_Active = useRef(" ")
 
 
-    const updateMachine = async (machineName, idDeliver, area, neighborhood, address, maxItems, minItems, require_Hour_Active) => {
+    const updateMachine = async (machineName, idDeliver, area, neighborhood, address, minItems, maxItems, require_Hour_Active) => {
         const updateDetailMachine = {
             _id: machine._id,
             machineName: machineName,
@@ -111,7 +111,7 @@ const Machine = (props) => {
     };
 
 
-    const createDeliver = async (machineName, idDeliver, area, neighborhood, address, maxItems, minItems, require_Hour_Active) => {
+    const createDeliver = async (machineName, idDeliver, area, neighborhood, address, minItems, maxItems, require_Hour_Active) => {
 
         const newMachine = {
             machineName: machineName,
@@ -119,8 +119,8 @@ const Machine = (props) => {
             area: area,
             neighborhood: neighborhood,
             address: address,
-            maxItems: maxItems,
             minItems: minItems,
+            maxItems: maxItems,
             require_Hour_Active: require_Hour_Active
         }
         const headers = { Authorization: `Bearer ${token}` };
@@ -243,8 +243,7 @@ const Machine = (props) => {
                 _machines[index] = _machine;
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Machine Updated', life: 3000 });
             }
-
-            setMachines(_machines);
+            setMachines(_machines)
             setUpdateDialog(false);
             setProduct(emptyProduct);
             updateMachine(
@@ -436,6 +435,10 @@ const Machine = (props) => {
 
     const editProduct = (machine) => {
         setProduct({ ...machine });
+        filteredDeliveries = DeliversDataToArea.filter(element => element.area === machine.area);
+
+        setselectedArea(machine.area)
+        setFindDeliverByArea(filteredDeliveries);
         setUpdateDialog(true);
     };
 
@@ -458,11 +461,9 @@ const Machine = (props) => {
                     dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} machines" globalFilter={globalFilter} header={header}>
-                    {/* <Column selectionMode="multiple" exportable={false}></Column> */}
                     <Column field="machineName" header="machineName" sortable style={{ minWidth: '12rem' }}></Column>
-                    {/* <Column field="idDeliver" header="idDeliver" sortable style={{ minWidth: '16rem' }} body={(rowData) => rowData.idDeliver} /> */}
                     <Column field="area" header="area" sortable style={{ minWidth: '16rem' }}></Column>
-                    <Column field="neighborhood" heade="neighborhood" sortable style={{ minWidth: '16rem' }}></Column>
+                    <Column field="neighborhood" header="neighborhood" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="address" header="address" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="minItems" header="minItems" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="maxItems" header="maxItems" sortable style={{ minWidth: '16rem' }}></Column>
@@ -550,13 +551,13 @@ const Machine = (props) => {
                     {submitted && !machine.address && <small className="p-error">Address is required.</small>}
                 </div>
                 <label htmlFor="area" className="font-bold">area</label>
-
                 <div className="card flex justify-content-left">
                     <Dropdown
+
                         value={selectedArea}
                         onChange={(e) => {
                             setselectedArea(e.value);
-                            const filteredDeliveries = DeliversDataToArea.filter(element => element.area === e.value);
+                            filteredDeliveries = DeliversDataToArea.filter(element => element.area === e.value);
                             setFindDeliverByArea(filteredDeliveries);
                         }} options={DeliversName} placeholder="Select an area" className="w-full md:w-14rem" ref={area} /> </div>
                 <div className="field">

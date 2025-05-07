@@ -37,7 +37,7 @@ const Login = () => {
 
     localStorage.setItem('token', res.data.accessToken)
 
-    navigate('./delivers/ViewDelivers');
+    navigate('../../delivers/ViewDelivers');
   }
   const password = useRef(" ")
   const username = useRef(" ")
@@ -54,73 +54,6 @@ const Login = () => {
   }
 
   return (
-    // <div className="app-container">
-    //   <div className="form-container">
-    //     <h2 className="form-title">login</h2>
-    //     <form onSubmit={handleSubmit(onSumbit)}>
-
-    //       <div className={`input-group${errors.name ? 'error' : ''}`}>
-    //         <label >UserName</label>
-    //         <input
-    //           {...register("username", { required: true, minLength: 3, type: "text" })}
-    //         />
-    //       </div>
-    //       <div className={`input-group ${errors.password ? 'error' : ''}`}>
-    //         <label >Password *</label>
-    //         <input
-    //           type='password'
-    //           {...register("password", { required: true, minLength: 3 })}
-    //         />
-    //       </div>
-
-    //       <button type="submit" className="submit-btn"  >Sign Up</button>
-
-    //     
-    //   </div>
-    // </div>
-
-  //   <div className="card">
-  //     <div className="flex flex-column md:flex-row">
-  //       <form onSubmit={handleSubmit(onSumbit)}>
-  //         <div className="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5">
-
-  //           <div className="flex flex-wrap justify-content-center align-items-center gap-2">
-
-  //             <label className="w-6rem">Username</label>
-  //             <InputText id="username" type="text" className="w-12rem" ref={username} />
-  //             {/* <label >UserName</label>
-  //                         <input
-  //                         {...register("username", { required: true, minLength: 3, type: "text" })}
-  //                         /> */}
-  //           </div>
-  //           <div className="flex flex-wrap justify-content-center align-items-center gap-2">
-  //             <label className="w-6rem">Password *</label>
-  //             <InputText id="password" type="password" className="w-12rem" ref={password} />
-  //             {/* <label >Password *</label>
-  //                       <input
-  //                         type='password'
-  //                         {...register("password", { required: true, minLength: 3 })}
-  //                       /> */}
-
-  //           </div>
-  //           <Button label="Login" icon="pi pi-user" className="w-10rem mx-auto"></Button>
-  //         </div>
-  //         <div className="w-full md:w-2">
-  //           <Divider layout="vertical" className="hidden md:flex">
-  //             <b>OR</b>
-  //           </Divider>
-  //           <Divider layout="horizontal" className="flex md:hidden" align="center">
-  //             <b>OR</b>
-  //           </Divider>
-  //         </div>
-  //         <div className="w-full md:w-5 flex align-items-center justify-content-center py-5">
-  //           <Button type="submit" label="Sign Up" icon="pi pi-user-plus" severity="success" className="w-10rem"> </Button>
-  //         </div>
-  //       </form>
-  //     </div>
-  //   </div>
-
-  //
   <div className='login'>
   <div className="app-container">
     <div className="form-container">
@@ -142,7 +75,6 @@ const Login = () => {
         </div>
 
         <button type="submit" className="submit-btn">Sign in</button>
-        {/* {token} */}
       </form>
     </div>
   </div>
