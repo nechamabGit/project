@@ -1,11 +1,21 @@
+
 import '../App.css';
+//import { Divider } from 'primereact/divider';
+//import { InputText } from 'primereact/inputtext';
+//import { Button } from 'primereact/button';
 import { useNavigate } from "react-router";
-import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form"
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { setToken, setRole, setUser } from '../redux/tokenSlice';
-import { useState } from 'react';
+import { setToken,setRole,setUser } from '../redux/tokenSlice'
+import { useEffect, useState, useRef } from "react"
+import { Divider } from 'primereact/divider';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+
+
 const Login = () => {
+  // const [token, settoken] = useState('')
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state)
@@ -37,37 +47,11 @@ const Login = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
-
-  const loginUser = async (data) => {
-    const username = data.username;
-    const password = data.password;
-
-    try {
-      const res = await axios.post('http://localhost:7002/api/auth/login', { username, password });
-
-      if (res.status === 200) {
-        console.log(res.data);
-        dispatch(setToken(res.data.accessToken));
-        dispatch(setRole(res.data.user.role));
-        dispatch(setUser(res.data.user));
-
-        localStorage.setItem('token', res.data.accessToken);
-
-        navigate('./delivers/ViewDelivers');
-      } else {
-        setServerError("Login failed. Please check your username and password.");
-      }
-    } catch (error) {
-      console.error("Error during login:", error.message);
-      setServerError("An error occurred during login. Please try again later.");
-    }
-  };
+  } = useForm()
 
   const onSumbit = (data) => {
-    setServerError(null); // איפוס הודעת שגיאה לפני ניסיון חדש
     loginUser(data);
-  };
+  }
 
   return (
     // <div className="app-container">
