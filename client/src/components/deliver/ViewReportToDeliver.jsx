@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'primereact/button'
 //import { useNavigate } from "react-router";
 import ReportToDeliver from "./ReportToDeliver";
+import RandomWayToDeliver from "./RandomWay";
 
 const ViewReportToDelivedr = () => {
     const { token, user } = useSelector((state) => state.token);
     
     const [reportsTodeliversData, setreportsTodeliversData] = useState([]);
+   
 
     const getReportsToDelivers = async () => {
          //const username=token.user
@@ -46,7 +48,9 @@ const ViewReportToDelivedr = () => {
             
         </div>
          */}
+         <RandomWayToDeliver  reportsTodeliversData={reportsTodeliversData}    ></RandomWayToDeliver>
         <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+
             {reportsTodeliversData && reportsTodeliversData.map((report, index) =>{
                 return (
                     <div style={{ margin: "10px" }} key={index}>

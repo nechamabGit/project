@@ -12,13 +12,13 @@ const HomeDeliver = () => {
     const navigate= useNavigate()
     
     const items = [
-        // {
-        //     label: 'Home',
-        //     icon: 'pi pi-home',
-        //     command: () => {
-        //         navigate('/')
-        //     }
-        // },
+        {
+            label: 'way to day',
+            icon: 'pi pi-home',
+            command: () => {
+                navigate('./deliver/RandomWay')
+            }
+        },
         {
             label: ' reports',
             icon: 'pi pi-star',

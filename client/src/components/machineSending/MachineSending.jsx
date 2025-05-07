@@ -20,6 +20,8 @@ const MachineSending = (props) => {
     const { token } = useSelector((state) => state.token);
 
     const getMachineSendings = async () => {
+        
+
         try {
             console.log(token);
             const res = await axios.get('http://localhost:7002/api/machineSending', {
@@ -34,11 +36,12 @@ const MachineSending = (props) => {
     };
 
     const formatCurrency = (value) => {
-        console.log(value);
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    //    console.log(value);
+        //return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     };
 
     const sendReport = (rowData) => {
+        console.log({"rowData":  rowData});
         return (
             <>
                 <Button onClick={() => { setFillReport(true); }}>שלח דוח</Button>
@@ -52,6 +55,7 @@ const MachineSending = (props) => {
         );
     };
    const makeMachineName = (rowData) => {
+        //console.log({"rowData":  rowData});    
         return <h4> {rowData.idMachine.machineName} </h4>;
 };
     const getSeverity = (MachineSending) => {
@@ -84,6 +88,8 @@ const MachineSending = (props) => {
     );
 
     const statusBodyTemplate = (rowData) => {
+        // console.log(rowData);
+        
         return <Tag value={getStatus(rowData)} severity={getSeverity(rowData)}></Tag>;
     };
 
