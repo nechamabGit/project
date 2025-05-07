@@ -19,7 +19,9 @@ const CreatReportToDeliver = (props) => {
   
     const massage=useRef(" ");
     // const username = useRef(" ")
-
+        // console.log("create");
+        console.log({"rowData in create":rowData});
+        console.log('Types:', typeof rowData);
     const createReportToDeliver = async (idMachine, countFilling,complete,message) =>{
 
         const newReportToDeliver = {
@@ -42,6 +44,7 @@ const CreatReportToDeliver = (props) => {
             <Button label="Yes" icon="pi pi-check" severity="danger" onClick={()=>createReportToDeliver(rowData.idMachine,50,false,massage.current.value)}     />
         </React.Fragment>
     );
+    // 
 
     return (<>
             <Dialog visible={fillReport} style={{ width: '80em' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Report" modal footer={sendToDeliver} onHide={hideFillReport}>
@@ -50,7 +53,7 @@ const CreatReportToDeliver = (props) => {
                     <div>
                         <p>Hello  {rowData.idMachine.idDeliver.name} </p>
                         <p> you need to fill in your machine    {(rowData.idMachine.maxItems - rowData.amountLeft).toString()} </p>
-                        <InputText type="text" label="massage"style={{ width: '1000px',  height: '100px'        }}    ref={massage}   />
+                        <InputText type="text" label="massage"style={{ width: '1000px',  height: '100px' }}    ref={massage}   />
                     </div>                             
                 
                 </div>

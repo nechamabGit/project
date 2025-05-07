@@ -1,7 +1,14 @@
 const MachineSending = require("../models/MachineSending");
 
 const createNewMachineSending = async (req, res) => {
+    console.log("start");
+    
     const { idMachine, amountBuying, amountLeft, last_Hour_Active } = req.body//,machinesArr
+    console.log(last_Hour_Active);
+    console.log(amountLeft);
+    console.log(amountBuying);
+    console.log(idMachine);
+    
     if (!idMachine || !amountBuying || !amountLeft || !last_Hour_Active) {//|| !machinesArr) { // Confirm data
         return res.status(400).json({ message: 'all is required' })
     }

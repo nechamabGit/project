@@ -69,19 +69,42 @@ const createNewReportToDeliver = async (req, res) => {
         // if (!req.user || !req.user._id) {
         //   return res.status(400).json({ message: 'User ID is missing' });
         // }
-        const MachineByDeliver= await Machine.find({idDeliver: rrr}).lean();
+        const MachineByDeliver= await Machine.find({idDeliver: rrr}).populate('idDeliver').lean();
         console.log(MachineByDeliver);
         
-        const idMachine2= MachineByDeliver._id;
-        // קבלת הדו"ח על פי ה-ID
-         const ReportToDeliver2 = await ReportToDeliver.findById(idMachine2).lean();
-        //const ReportToDeliver2 = await ReportToDeliver.find({ user: _id }).lean();
-        // אם לא נמצא דו"ח
-        if (!ReportToDeliver2) {
-          return res.status(400).json({ message: 'No ReportToDeliver found' });
+        const reports = await Promise.all(
+          MachineByDeliver.map(machine => ReportToDeliver.find({ idMachine: machine._id })
+          .populate({
+            path: 'idMachine',
+            populate: { path: 'idDeliver' } // Populate idDeliver from idMachine
+        })
+        .lean())
+        );
+        console.log(reports);
+        console.log('Types:', reports.map(r => typeof r));
+        
+        const flatReports = [].concat(...reports).filter(r => r); // במקום .flat()
+    
+        if (flatReports.length === 0) {
+          return res.status(404).json({ message: 'No reports found for this deliverer' });
         }
-      
-        res.json(ReportToDeliver2);
+        
+        
+        res.json(flatReports);
+        
+        // MachineByDeliver.forEach(e => {
+        //     const idMachine2= e._id;
+        //     // קבלת הדו"ח על פי ה-ID
+        //     const ReportToDeliver2 = await ReportToDeliver.findById(idMachine2).lean();
+        //     //const ReportToDeliver2 = await ReportToDeliver.find({ user: _id }).lean();
+        //     // אם לא נמצא דו"ח
+        //     if (!ReportToDeliver2) {
+        //       return res.status(400).json({ message: 'No ReportToDeliver found' });
+        //     }
+          
+        //     res.json(ReportToDeliver2);
+        // });
+     
       }
                      
                     module.exports = {

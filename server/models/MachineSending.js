@@ -8,7 +8,7 @@ machineSendingSchema = new mongoose.Schema({
         ref: "Machine"
     },
     amountBuying: {
-        type: mongoose.Schema.Types.String,
+        type: Number,
         required: true,
     },
     amountLeft  : {
