@@ -1,0 +1,426 @@
+/* CreatDeliver Component Styles */
+
+/* עיצוב דיאלוג */
+.p-dialog {
+  background: linear-gradient(135deg, #000000, #00aaff); /* גרדיאנט שחור-תכלת */
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+}
+
+/* תיבות טקסט */
+.p-inputtext {
+  background-color: rgba(255, 255, 255, 0.1); /* רקע חצי שקוף */
+  border: 1px solid #00aaff; /* גבול תכלת */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* כותרות השדות */
+label {
+  color: #00aaff; /* תכלת */
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* כפתורים */
+.p-button {
+  background-color: transparent;
+  border: 2px solid #00aaff; /* גבול תכלת */
+  color: #00aaff;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.p-button:hover {
+  background-color: #00aaff; /* צבע רקע תכלת בעת ריחוף */
+  color: #000000; /* צבע טקסט שחור */
+}
+
+/* כפתור Cancel */
+.p-button-text {
+  color: #00aaff; /* צבע טקסט תכלת */
+  border: 1px solid #00aaff; /* גבול תכלת */
+}
+
+/* כל רכיב טקסט */
+.p-dialog .p-dialog-content {
+  color: white;
+  font-size: 16px;
+}
+
+/* גרדיאנט רקע הדף */
+body {
+  font-family: var(--font-family);
+  font-weight: normal;
+  background: linear-gradient(45deg, #000000, #00aaff); /* גרדיאנט בין שחור לתכלת */
+  animation: gradientAnimation 10s ease infinite; /* אנימציה מחזורית */
+  color: var(--text-color);
+  padding: 1rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* אנימציה של מעבר בין הגוונים */
+@keyframes gradientAnimation {
+  0% {
+      background: linear-gradient(45deg, #000000, #00aaff); /* שחור ותכלת */
+  }
+  50% {
+      background: linear-gradient(45deg, #00aaff, #000000); /* תכלת ושחור */
+  }
+  100% {
+      background: linear-gradient(45deg, #000000, #00aaff); /* חזרה לגרדיאנט המקורי */
+  }
+}
+
+.card {
+  background: var(--surface-card);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.custom-card {
+  display: inline-block;   /* או block עם רוחב אוטומטי */
+  width: auto;             /* לא 100% */
+  max-width: 300px;        /* או גודל קבוע שמתאים לך */
+  margin: 1rem;            /* קצת ריווח בין כרטיסים */
+  background-color: transparent;
+  border: 2px solid #00aaff;
+  color: black; /* שינוי הצבע לשחור */
+
+}
+
+.custom-button {
+  background-color: transparent;
+  border: 2px solid #00aaff; /* גבול תכלת */
+  color: #00aaff;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+/* במקום רוחב אחוזי – רוחב/גובה קבוע או מגבלת מקסימום: */
+.custom-header img {
+  width: 120px;       /* או width: 30%; max-width: 120px; */
+  height: 120px;      /* גובה שווה לרוחב לשמור על יחס 1:1 */
+  object-fit: cover;  /* כדי לחתוך את התמונה ולשמור על הפרופורציות */
+  border-radius: 50%; /* עיגול */
+}
+
+.custom-title {
+  color: #00aaff; /* תכלת */
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.custom-content {
+  font-size: 18px;
+  color: #00aaff; /* תכלת */
+}
+
+/* עיצוב לאזורי התמונות */
+.custom-header-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.custom-header-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.custom-header {
+  width: 30%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20%;
+  transition: transform 0.3s ease;
+}
+
+.custom-header:hover {
+  transform: scale(1.05); /* הגדלה של התמונה במעבר עכבר */
+}
+
+/* עבור מסכים קטנים יותר */
+@media (max-width: 768px) {
+  .custom-header {
+      width: 45%; /* אם המסך קטן, נעשה את התמונות רחבות יותר */
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-header {
+      width: 100%; /* אם המסך ממש קטן, כל תמונה תופס את כל השורה */
+  }
+}
+/* רקע בריאדיאל גרדיאנט תכלת-שחור + רדיוס ופדינג */
+.creat-deliver-dialog {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-image: radial-gradient(circle at left top, #7dd3fc, #000000);
+}
+
+/* תבנית למכלול תווית+שדה */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* תוויות תכלת מודגש */
+.form-group label {
+  color: #7dd3fc;
+  font-weight: 600;
+}
+
+/* שדות עם רקע שחור שקוף וטקסט תכלת */
+.input-field {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  padding: 0.75rem;
+  color: #7dd3fc;
+  border-radius: 0.5rem;
+}
+
+/* קבוצה של כפתורים צמודים */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* כפתור שקוף עם מסגרת תכלת ואפקט הובר */
+.button {
+  padding: 0.75rem;
+  flex: 1;
+  color: #000000 !important;
+  border: 1px solid black !important;
+  border-radius: 0.5rem;
+  background: transparent;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #164e63 !important;
+}
+.custom-card .p-card-header,
+.custom-card .p-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.custom-header-wrapper {
+  width: auto;
+  justify-content: center;
+}
+
+.custom-header img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+/* מרכז את הכותרת (השם) של הכרטיס */
+.custom-card .p-card-title {
+  display: block;        /* לוודא שהוא תופס רוחב מלא */
+  text-align: center;    /* מרכז טקסט */
+  width: 100%;
+  margin-bottom: 1px;   /* ריווח מתחת, לפי רצונך */
+}
+
+/* מרכז את ה-footer (כפתור ה־delete) */
+.custom-card .p-card-footer {
+  display: flex;
+  justify-content: center;  /* מרכז אופקית את התוכן */
+  padding-top: 1rem;        /* ריווח מעל, לפי צורך */
+}
+
+
+/* עיצוב כפתור ה-create */
+.create-button {
+  background-color: #00aaff; /* תכלת */
+  border: 2px solid #00aaff; /* גבול תכלת */
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 12px 24px; /* ריווח בתוך הכפתור */
+  border-radius: 50px; /* עיגול פינות */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* הצללה */
+  position: fixed; /* מקם אותו באופן קבוע */
+  top: 40px;   /* ריווח קטן מהחלק העליון (אם הסרגל בגובה 40px, אפשר להנמיך אותו אף יותר) */
+  left: 50%;   /* ממרכז אותו על הציר האופקי */
+  transform: translateX(-50%); /* מתקן את המיקום ומביא את הכפתור למרכז */
+  z-index: 1000; /* שים את הכפתור מעל שאר התוכן */
+}
+
+.create-button:hover {
+  background-color: #164e63; /* גוון כהה יותר */
+}
+
+.create-button:hover {
+  background-color: #164e63; /* גוון כהה יותר */
+}
+
+
+
+.main-content {
+  display: flex;
+  flex-wrap: wrap; /* מאפשר לתוכן להתפרס לכמה שורות */
+  justify-content: space-around; /* ממרכז את הכרטיסים במרווח */
+}
+
+.card {
+  flex: 1 1 300px; /* כל כרטיס יתפוס רוחב מינימלי של 300px, וגמיש לפי הצורך */
+  margin: 1rem; /* ריווח בין הכרטיסים */
+}
+.login-card-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.login-card {
+  background: #000000;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.login-title {
+  color: #000000;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.login-form {  color: #000000;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-field label {
+  color: #000000;
+
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.login-field .p-inputtext {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #00aaff;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 0.5rem;
+}
+
+.login-button {
+  background-color: #00aaff !important;
+  border: none !important;
+  color: #000000 !important;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem !important;
+  align-self: center;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #164e63 !important;
+  color: #ffffff !important;
+}
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: radial-gradient(circle at left top, var(--primary-400), var(--primary-700));
+  border-radius: 12px;
+  color: #000000;
+
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--surface-0);
+}
+
+.input {
+  padding: 0.75rem;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cancelButton,
+.addButton {
+  width: 100%;
+  padding: 0.75rem;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cancelButton:hover,
+.addButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.toast-message {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #000000;
+}
+
+.toast-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.delete-button {
+  margin-left: 0.5rem;
+}
+
+.card-image {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+
+.main-content {
+  padding-top: 100px; /* מרווח כדי שהכרטיסים לא יתחבאו מתחת לכפתור */
+}

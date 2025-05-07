@@ -1,21 +1,18 @@
 import Deliver from "./Deliver";
-import React from "react";
-import { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import CreatDeliver from "./CreateDeliver";
-import { Button } from 'primereact/button'
-//import { useNavigate } from "react-router";
-
-//const navigate = useNavigate();
+import styles from '../../delivers.module.css'; // CSS מודול
+import { Button } from 'primereact/button';
 
 const ViewDelivers = () => {
     const { token } = useSelector((state) => state.token);
     const [deliversData, setDeliversData] = useState([]);
+    const [visible, setVisible] = useState(false);
 
     const getDelivers = async () => {
         try {
-            console.log(token);
             const res = await axios.get('http://localhost:7002/api/delivers', {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -26,31 +23,43 @@ const ViewDelivers = () => {
             console.error(e);
         }
     };
+
     useEffect(() => {
         getDelivers();
     }, []);
 
-    const [visible, setVisible] = useState(false);
+    return (
+        <>
+            <div className={styles['create-button-container']}>
+                <button
+                    className={styles['create-button']}
+                    onClick={() => setVisible(true)}
+                >
+                    Create
+                </button>
+            </div>
 
-    
+            <CreatDeliver
+                areaDeliver={null}
+                visible={visible}
+                setVisible={setVisible}
+                getDelivers={getDelivers}
+            />
 
-    return ( <>  
-        <div>
-            <Button label="create" icon="pi pi-user" onClick={() => { setVisible(true)} }/>
-            <CreatDeliver areaDeliver={null}  visible={visible} setVisible={setVisible} getDelivers={getDelivers}></CreatDeliver>
-            
-        </div>
-        
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-            {deliversData && deliversData.map((deliver, index) =>{
-                return (
-                    <div style={{ margin: "10px" }} key={index}>
-                        <Deliver index={index} deliver={deliver} setDeliversData={setDeliversData} getDelivers={getDelivers}  />
+            <div className={styles['main-content']}>
+                {deliversData.map((deliver, index) => (
+                    <div className={styles['custom-card']} key={index}>
+                        <Deliver
+                            index={index}
+                            deliver={deliver}
+                            setDeliversData={setDeliversData}
+                            getDelivers={getDelivers}
+                        />
                     </div>
-                );
-            }  )}
-        </div>
-        </> );
+                ))}
+            </div>
+        </>
+    );
 };
 
 export default ViewDelivers;
