@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from 'react-redux';
-import { Button } from 'primereact/button';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'primereact/button'
+//import { useNavigate } from "react-router";
 import ReportToDeliver from "./ReportToDeliver";
 import RandomWayToDeliver from "./RandomWay";
 
@@ -12,12 +13,10 @@ const ViewReportToDeliver = () => {
 
     // Fetch reports from the server
     const getReportsToDelivers = async () => {
+         //const username=token.user
         try {
-            if (!token) {
-                console.warn("Token is missing, cannot fetch reports");
-                return;
-            }
-
+           // console.log(token);
+            console.log("iiiiiiiiiiiiiiii");
             const res = await axios.get("http://127.0.0.1:7002/api/reportToDeliver/byid", {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -47,31 +46,24 @@ const ViewReportToDeliver = () => {
         getReportsToDelivers();
     }, []);
 
-    return (
-        <>
-            {/* Button to trigger random way */}
-            <RandomWayToDeliver reportsTodeliversData={reportsTodeliversData} />
+    const [visible, setVisible] = useState(false);
 
-            {/* Display reports */}
-            <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap"
-            }}>
-                {reportsTodeliversData.length > 0 ? (
-                    reportsTodeliversData.map((report, index) => (
-                        <div style={{ margin: "10px" }} key={index}>
-                            <ReportToDeliver
-                                index={index}
-                                report={report}
-                                setReportsTodeliversData={setReportsTodeliversData}
-                                getReportsToDelivers={getReportsToDelivers}
-                            />
-                        </div>
-                    ))
-                ) : (
-                    <div style={{ width: "100%", textAlign: "center", marginTop: "20px" }}>
-                        No reports available to display
+    
+
+    return ( <>  
+        {/* <div>
+            <Button label="create" icon="pi pi-user" onClick={() => { setVisible(true)} }/>
+            <CreatDeliver areaDeliver={null}  visible={visible} setVisible={setVisible} getDelivers={getDelivers}></CreatDeliver>
+            
+        </div>
+         */}
+         <RandomWayToDeliver  reportsTodeliversData={reportsTodeliversData}    ></RandomWayToDeliver>
+        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+
+            {reportsTodeliversData && reportsTodeliversData.map((report, index) =>{
+                return (
+                    <div style={{ margin: "10px" }} key={index}>
+                        <ReportToDeliver index={index} report={report} setreportsTodeliversData={setreportsTodeliversData} getReportsToDelivers={getReportsToDelivers}  />
                     </div>
                 )}
             </div>

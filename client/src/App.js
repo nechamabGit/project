@@ -45,7 +45,6 @@ function App() {
               <Route path="/login" element={<Login/>} />
               <Route path="/deliver/ViewReportToDeliver" element={<ViewReportToDeliver/>} />
 
-              {/* <Route path="/components/Register" element={<Register />} /> */}
       </Routes>
     </div>
   );
