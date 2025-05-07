@@ -6,9 +6,9 @@ const verifyJWTManager = require("../middleware/verifyJWTManager")
 
 const deliverController = require("../controllers/deliverControllers")
 router.get("/",deliverController.getAllDelivers)
-router.post("/", deliverController.createNewDeliver)
-router.delete("/:_id",deliverController.deleteDeliver)
-router.put("/",deliverController.updateDeliver)
+router.post("/",verifyJWTManager, deliverController.createNewDeliver)
+router.delete("/:_id",verifyJWTManager,deliverController.deleteDeliver)
+router.put("/",verifyJWTManager,deliverController.updateDeliver)
 
 
 module.exports = router

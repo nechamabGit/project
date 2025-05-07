@@ -7,9 +7,9 @@ const reportToDeliverController = require("../controllers/reportToDeliverControl
 router.get("/",reportToDeliverController.getAllReportToDeliver)
 console.log("tttttttttt");
 router.get("/byid",verifyJWTDeliver,reportToDeliverController.getReportToDeliverById)
-router.post("/", reportToDeliverController.createNewReportToDeliver)
-router.delete("/:_id",reportToDeliverController.deleteReportToDeliver)
-router.put("/",reportToDeliverController.updateReportToDeliver)
+router.post("/",verifyJWTManager, reportToDeliverController.createNewReportToDeliver)
+router.delete("/:_id",verifyJWTManager,reportToDeliverController.deleteReportToDeliver)
+router.put("/",verifyJWTManager,reportToDeliverController.updateReportToDeliver)
 
 
 module.exports = router

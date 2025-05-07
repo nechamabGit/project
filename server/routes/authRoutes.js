@@ -5,7 +5,7 @@ const verifyJWTManager = require("../middleware/verifyJWTManager")
 
 const authController = require("../controllers/authController")
 router.post("/login", authController.login)
-router.post("/registerManager",authController.registerManager)
-router.post("/registerDeliver", authController.registerDeliver)
+router.post("/registerManager",verifyJWTManager,authController.registerManager)
+router.post("/registerDeliver", verifyJWTManager,authController.registerDeliver)
 
 module.exports = router

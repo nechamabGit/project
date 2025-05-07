@@ -14,6 +14,8 @@ const CreatDeliver = ({ visible, setVisible, areaDeliver, getDelivers }) => {
         area: areaDeliver?.area || "",
     });
 
+    const [errors, setErrors] = useState({}); // שמירת שגיאות ולידציה
+
     useEffect(() => {
         if (areaDeliver?.area) {
             setFormData((prev) => ({ ...prev, area: areaDeliver.area }));
@@ -25,16 +27,30 @@ const CreatDeliver = ({ visible, setVisible, areaDeliver, getDelivers }) => {
         setFormData({ ...formData, [id]: value });
     };
 
-    const createDeliver = async () => {
-        const { username, password, name, email, area } = formData;
+    const validateFields = () => {
+        const newErrors = {};
+        if (!formData.username) newErrors.username = "Username is required.";
+        if (!formData.password) newErrors.password = "Password is required.";
+        if (!formData.name) newErrors.name = "Name is required.";
+        if (!formData.area) newErrors.area = "Area is required.";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
+    const createDeliver = async () => {
+        // if (!validateFields()) {
+        //     return; // אם יש שגיאות - עצור את הפעולה
+        // }
+
+        const { username, password, name, email, area } = formData;
         try {
             const res = await axios.post('http://localhost:7002/api/auth/registerDeliver', {
                 username, password, name, email, area
             });
 
-            if (res.status === 201) {
+            if (res) {
                 if (areaDeliver) {
+                    console.log("in areaDeliver");
                     await axios.put(`http://localhost:7002/api/machines/updateMachineDeliver/${areaDeliver._id}`, {
                         newId: res.data._id
                     });
@@ -42,13 +58,16 @@ const CreatDeliver = ({ visible, setVisible, areaDeliver, getDelivers }) => {
                     await axios.delete(`http://localhost:7002/api/delivers/${areaDeliver._id}`);
                     alert("Success");
                 }
-
-                getDelivers();
             }
         } catch (error) {
             console.error("Error creating deliver:", error);
+            alert("Failed to create deliver. Please try again.");
         }
     };
+
+    useEffect(() => {
+        getDelivers();
+    }, [getDelivers]);
 
     const hideDialog = () => {
         setVisible(false);
@@ -70,14 +89,16 @@ const CreatDeliver = ({ visible, setVisible, areaDeliver, getDelivers }) => {
                             type="text"
                             value={formData[field]}
                             onChange={handleChange}
-                            className={styles.input}
+                            className={`${styles.input} ${errors[field] ? styles.errorInput : ""}`}
                             disabled={field === "area" && areaDeliver}
                         />
+                        {errors[field] && <small className={styles.errorText}>{errors[field]}</small>}
                     </div>
                 ))}
 
                 <div className={styles.buttonRow}>
                     <Button label="Cancel" onClick={hideDialog} className={styles.cancelButton} />
+
                     <Button label="Add" onClick={() => { createDeliver(); hideDialog(); }} className={styles.addButton} />
                 </div>
             </div>

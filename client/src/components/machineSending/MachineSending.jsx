@@ -14,13 +14,14 @@ const MachineSending = (props) => {
     const [MachineSendings, setMachineSendings] = useState(null);
     const [fillReport, setFillReport] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
-
+    const [report, setReport] = useState();
+    const [notWorking, setnotWorking] = useState();
     const toast = useRef(null);
     const dt = useRef(null);
     const { token } = useSelector((state) => state.token);
 
     const getMachineSendings = async () => {
-        
+
 
         try {
             console.log(token);
@@ -36,28 +37,25 @@ const MachineSending = (props) => {
     };
 
     const formatCurrency = (value) => {
-    //    console.log(value);
+        //    console.log(value);
         //return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     };
 
     const sendReport = (rowData) => {
-        console.log({"rowData":  rowData});
+
         return (
             <>
-                <Button onClick={() => { setFillReport(true); }}>שלח דוח</Button>
-                <CreatReportToDeliver
-                    fillReport={fillReport}
-                    rowData={rowData}
-                    hideFillReport={() => setFillReport(false)}
-                    setFillReport={setFillReport}
-                ></CreatReportToDeliver>
+                {rowData.last_Hour_Active < rowData.idMachine.require_Hour_Active ?
+                    <Button disabled onClick={() => { setReport(rowData); setFillReport(true); }}>שלח דוח</Button> :
+                     <Button onClick={() => { setReport(rowData); setFillReport(true); }}>שלח דוח</Button>}
+
             </>
         );
     };
-   const makeMachineName = (rowData) => {
+    const makeMachineName = (rowData) => {
         //console.log({"rowData":  rowData});    
         return <h4> {rowData.idMachine.machineName} </h4>;
-};
+    };
     const getSeverity = (MachineSending) => {
         if (MachineSending.last_Hour_Active < MachineSending.idMachine.require_Hour_Active) {
             return 'warning';
@@ -89,8 +87,8 @@ const MachineSending = (props) => {
 
     const statusBodyTemplate = (rowData) => {
         // console.log(rowData);
-        
         return <Tag value={getStatus(rowData)} severity={getSeverity(rowData)}></Tag>;
+
     };
 
     useEffect(() => {
@@ -113,13 +111,22 @@ const MachineSending = (props) => {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="machinName" header="machinName" body={makeMachineName}sortable style={{ minWidth: '12rem' }}></Column>
+                    <Column field="machinName" header="machinName" body={makeMachineName} sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="amountBuying" header="amountBuying" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="amountLeft" header="amountLeft" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="last_Hour_Active" header="last_Hour_Active" sortable style={{ minWidth: '16rem' }}></Column>
                     <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column>
                     <Column header="sending report" body={sendReport} exportable={false} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
+
+                {fillReport && report ? <>
+                    {console.log(report)
+                    }  <CreatReportToDeliver
+                        fillReport={fillReport}
+                        rowData={report}
+                        hideFillReport={() => setFillReport(false)}
+                        setFillReport={setFillReport}
+                    ></CreatReportToDeliver></> : <></>}
             </div>
         </div>
     );
